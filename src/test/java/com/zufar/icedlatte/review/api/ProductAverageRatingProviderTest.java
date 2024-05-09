@@ -52,7 +52,7 @@ class ProductAverageRatingProviderTest {
         var reviewsCount = 0;
 
         var expectedRatingMap = new RatingMap(1, 0, 0, 0, 0);
-        var expectedStats = new ProductReviewRatingStats(randomID, "0.0", reviewsCount, expectedRatingMap);
+        var expectedStats = new ProductReviewRatingStats(randomID, "0,0", reviewsCount, expectedRatingMap);
         when(reviewRepository.getRatingsMapByProductId(randomID)).thenReturn(listOfMappings);
         when(reviewRepository.getAvgRatingByProductId(randomID)).thenReturn(0.0);
         when(reviewRepository.getReviewCountProductById(randomID)).thenReturn(reviewsCount);
