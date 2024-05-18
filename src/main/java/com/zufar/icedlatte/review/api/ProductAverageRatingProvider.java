@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Slf4j
@@ -37,7 +38,7 @@ public class ProductAverageRatingProvider {
             log.error("The product with productId = {} was not found.", productId);
             throw new ProductNotFoundException(productId);
         }
-        String formattedAvgRating = String.format("%.1f", avgRating);
+        String formattedAvgRating = String.format(Locale.US, "%.1f", avgRating);
         Integer reviewsCount = reviewRepository.getReviewCountProductById(productId);
         RatingMap productRatingMap = productReviewDtoConverter.convertToProductRatingMap(productRatingCountPairs);
 
