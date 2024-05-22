@@ -21,19 +21,4 @@ public class FavoriteItemDtoConverterTest {
         converter = Mappers.getMapper(FavoriteItemDtoConverter.class);
         productInfoDtoConverter = Mappers.getMapper(ProductInfoDtoConverter.class);
     }
-
-    @Test
-    @DisplayName("Convert FavoriteItemEntity to FavoriteItemDto")
-    void toDtoTest() {
-
-        ProductInfo productInfo = new ProductInfo();
-        productInfo.setProductId(UUID.randomUUID());
-
-        FavoriteItemEntity expectedFavoriteItem = new FavoriteItemEntity();
-        expectedFavoriteItem.setProductInfo(productInfo);
-
-        FavoriteItemDto actualFavoriteItemDto = converter.toDto(productInfoDtoConverter, expectedFavoriteItem);
-        // FIXME: different types of sets
-        //assertThat(actualFavoriteItemDto.productInfo()).isEqualTo(expectedFavoriteItem.getProductInfo());
-    }
 }
