@@ -96,7 +96,7 @@ public class ProductReviewEndpoint implements com.zufar.icedlatte.openapi.produc
     @GetMapping("/{productId}/reviews/statistics")
     public ResponseEntity<ProductReviewRatingStats> getRatingAndReviewStat(@PathVariable final UUID productId) {
         log.info("Received the request to get the statistics of product's review and rating for the product with the productId = '{}'", productId);
-        final ProductReviewRatingStats stats = productReviewsStatisticsProvider.get(productId);
+        final ProductReviewRatingStats stats = productReviewsStatisticsProvider.getRatingAndReviewStat(productId);
         log.info("Statistics for product's review and rating for the product with the productId = '{}' was retrieved successfully", productId);
         return ResponseEntity.ok().body(stats);
     }

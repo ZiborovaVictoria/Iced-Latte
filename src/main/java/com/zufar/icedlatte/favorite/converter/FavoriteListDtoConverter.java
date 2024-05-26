@@ -21,19 +21,19 @@ import java.util.UUID;
         uses = FavoriteItemDtoConverter.class, unmappedTargetPolicy = ReportingPolicy.IGNORE, injectionStrategy = InjectionStrategy.FIELD)
 public interface FavoriteListDtoConverter {
 
-    @Mapping(target = "userId", source = "user", qualifiedByName = "toUserId")
+    @Mapping(target = "userId", source = "userId")
     @Mapping(target = "favoriteItems", source = "favoriteItems", qualifiedByName = "mapFavoriteItems")
     FavoriteListDto toDto(final FavoriteListEntity favoriteListEntity);
 
     @Mapping(target = "id", source = "productId")
     ProductInfoDto convertProductInfoDto(ProductInfo productInfo);
 
-    @Named("toUserId")
-    default UUID convertToUserId(UserEntity user) {
-        Optional<UserEntity> userOptional = Optional.ofNullable(user);
-        Optional<UUID> userIdOptional = userOptional.map(UserEntity::getId);
-        return userIdOptional.orElse(null);
-    }
+//    @Named("toUserId")
+//    default UUID convertToUserId(UserEntity user) {
+//        Optional<UserEntity> userOptional = Optional.ofNullable(user);
+//        Optional<UUID> userIdOptional = userOptional.map(UserEntity::getId);
+//        return userIdOptional.orElse(null);
+//    }
 
     @Named("mapFavoriteItems")
     default FavoriteItemDto toFavoriteItemDto(FavoriteItemEntity itemEntity) {

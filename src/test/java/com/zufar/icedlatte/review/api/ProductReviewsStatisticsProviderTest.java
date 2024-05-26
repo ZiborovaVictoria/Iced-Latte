@@ -51,7 +51,7 @@ class ProductReviewsStatisticsProviderTest {
         when(reviewRepository.getReviewCountProductById(randomID)).thenReturn(reviewsCount);
         when(productReviewDtoConverter.convertToProductRatingMap(listOfMappings)).thenReturn(expectedRatingMap);
 
-        assertEquals(expectedStats, productReviewsStatisticsProvider.get(randomID));
+        assertEquals(expectedStats, productReviewsStatisticsProvider.getRatingAndReviewStat(randomID));
 
         verify(productReviewValidator, times(1)).validateProductExists(randomID);
         verify(reviewRepository, times(1)).getRatingsMapByProductId(randomID);
@@ -70,7 +70,7 @@ class ProductReviewsStatisticsProviderTest {
         when(reviewRepository.getRatingsMapByProductId(randomID)).thenReturn(null);
         when(reviewRepository.getAvgRatingByProductId(randomID)).thenReturn(null);
 
-        assertEquals(expectedStats, productReviewsStatisticsProvider.get(randomID));
+        assertEquals(expectedStats, productReviewsStatisticsProvider.getRatingAndReviewStat(randomID));
 
         verify(productReviewValidator, times(1)).validateProductExists(randomID);
         verify(reviewRepository, times(1)).getRatingsMapByProductId(randomID);

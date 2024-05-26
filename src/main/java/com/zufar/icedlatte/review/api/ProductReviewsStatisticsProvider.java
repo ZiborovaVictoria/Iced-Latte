@@ -2,6 +2,7 @@ package com.zufar.icedlatte.review.api;
 
 import com.zufar.icedlatte.openapi.dto.ProductReviewRatingStats;
 import com.zufar.icedlatte.openapi.dto.RatingMap;
+import com.zufar.icedlatte.product.exception.ProductNotFoundException;
 import com.zufar.icedlatte.review.converter.ProductReviewDtoConverter;
 import com.zufar.icedlatte.review.dto.ProductRatingCount;
 import com.zufar.icedlatte.review.repository.ProductReviewRepository;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ProductAverageRatingProvider {
+public class ProductReviewsStatisticsProvider {
 
     private final ProductReviewRepository reviewRepository;
     private final ProductReviewDtoConverter productReviewDtoConverter;
