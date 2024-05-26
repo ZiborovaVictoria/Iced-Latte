@@ -14,24 +14,29 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ProductReviewsStatisticsProvider {
+public class ProductAverageRatingProvider {
 
     private final ProductReviewRepository reviewRepository;
     private final ProductReviewDtoConverter productReviewDtoConverter;
     private final ProductReviewValidator productReviewValidator;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public ProductReviewRatingStats get(final UUID productId) {
-        productReviewValidator.validateProductExists(productId);
-
-        String formattedAvgRating = getFormattedAverageProductRating(productId);
+    public ProductReviewRatingStats getRatingAndReviewStat(final UUID productId) {
+        List<ProductRatingCount> productRatingCountPairs = reviewRepository.getRatingsMapByProductId(productId);
+        Double avgRating = reviewRepository.getAvgRatingByProductId(productId);
+        if (productRatingCountPairs == null || avgRating == null) {
+            log.error("The product with productId = {} was not found.", productId);
+            throw new ProductNotFoundException(productId);
+        }
+        String formattedAvgRating = String.format(Locale.US, "%.1f", avgRating);
         Integer reviewsCount = reviewRepository.getReviewCountProductById(productId);
-        RatingMap productRatingMap = getProductRatingMap(productId);
+        RatingMap productRatingMap = productReviewDtoConverter.convertToProductRatingMap(productRatingCountPairs);
 
         return new ProductReviewRatingStats(productId, formattedAvgRating, reviewsCount, productRatingMap);
     }
